@@ -1,34 +1,16 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@functions/*": [
-                "src/functions/*"
-            ],
-            "@products/*": [
-                "src/functions/products/*"
-            ],
-            "@carts/*": [
-                "src/functions/carts/*"
-            ],
-            "@checkout/*": [
-                "src/functions/checkout/*"
-            ],
-            "@libs/*": [
-                "src/libs/*"
-            ],
-            "@dbModel/*": [
-                "src/models/database/*"
-            ],
-            "@lamdaModel/*": [
-                "src/models/schema/*"
-            ],
-            "@shared/*": [
-                "src/libs/shared/*"
-            ],
-            "@schema/*": [
-                "src/models/schema/*"
-            ]
-        }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@functions/*": [
+        "src/functions/*"
+      ],
+      "@dbModel/*": [
+        "src/models/database/*"
+      ],
+      "@s3Model/*": [
+        "src/models/s3/*"
+      ]
     }
+  }
 }
