@@ -4,7 +4,8 @@ import {
     addProductToCart,
     editCart,
     getCart,
-    removeProductFromCart
+    removeProductFromCart,
+    createCheckout
 } from '@functions/index';
 
 const serverlessConfiguration: AWS = {
@@ -30,8 +31,9 @@ const serverlessConfiguration: AWS = {
             STAGE: '${self:provider.stage}',
             QUEUE: '${self:custom.queue}',
             S3ARN: '${self:custom.s3arn}',
-            PRODUCTS_TABLE: '{self:custom.productsTable}',
-            USER_POOL_ID: '{self:custom.userPoolId}'
+            CARTS_TABLE: '${self:custom.cartsTable}',
+            USER_POOL_ID: '${self:custom.userPoolId}',
+            STRIPE_SECRET_KEY: '${self:custom.stripeSecretKey}'
         },
 
         iam: {
@@ -56,8 +58,9 @@ const serverlessConfiguration: AWS = {
         stage: '${opt:stage, self:provider.stage}',
         queue: 'https://sqs.eu-central-1.amazonaws.com/780844780884/messagesQueue',
         s3arn: 'arn:aws:sns:eu-central-1:780844780884:images',
-        productsTable: 'products-table',
+        cartsTable: 'carts-table',
         userPoolId: 'eu-central-1_eciEUvwzp',
+        stripeSecretKey: 'sk_test_51Ij41SF20K2KHUILxXq9l5A2CbPS6VtYNmH4Ij0PPZyxatNDMTyovfiFjdYtOaQvbrDCokLPhorse1BxVPNXt1jW0032wODV69',
         dynamodb: {
             stages: ['dev'],
             start: {
@@ -85,7 +88,8 @@ const serverlessConfiguration: AWS = {
     plugins: [
         'serverless-webpack',
         'serverless-offline',
-        'serverless-dynamodb-local'
+        'serverless-dynamodb-local',
+        'serverless-export-env'
     ],
 
 
@@ -94,7 +98,8 @@ const serverlessConfiguration: AWS = {
         addProductToCart,
         editCart,
         getCart,
-        removeProductFromCart
+        removeProductFromCart,
+        createCheckout
     },
 
 };

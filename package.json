@@ -4,7 +4,7 @@
     "description": "Serverless aws-nodejs-typescript template",
     "main": "serverless.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "mocha -r dotenv/config -r ts-node/register 'tests/**/*.ts'",
         "start": "./node_modules/.bin/serverless offline -s dev",
         "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/serverless offline -s dev",
         "debugWindows": "SET export SLS_DEBUG=* && node --nolazy --inspect node_modules/serverless/bin/serverless offline -s dev"
@@ -26,6 +26,7 @@
         "json-schema-to-ts": "^1.6.4",
         "serverless": "^2.42.0",
         "serverless-dynamodb-local": "^0.2.39",
+        "serverless-export-env": "^2.0.0",
         "serverless-offline": "^7.0.0",
         "serverless-offline-sns": "^0.7.0",
         "serverless-offline-sqs": "^4.1.1",
@@ -34,7 +35,7 @@
         "ts-loader": "^9.2.2",
         "ts-node": "^10.0.0",
         "tsconfig-paths-webpack-plugin": "^3.5.1",
-        "utilities-techsweave": "^1.1.10",
+        "utilities-techsweave": "^1.1.13",
         "uuid": "^3.3.2"
     },
     "devDependencies": {
