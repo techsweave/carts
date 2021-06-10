@@ -21,8 +21,8 @@ const getCartHandler: ValidatedEventAPIGatewayProxyEvent<void> = async (event) =
             userId = event.headers?.sessionId;
         }
 
-        const scanRes = await getCart(userId);
-        res = Response.fromMultipleData(scanRes.items, StatusCodes.OK, scanRes.lastKey);
+        const cart = await getCart(userId);
+        res = Response.fromMultipleData(cart.items, StatusCodes.OK, cart.lastKey);
     } catch (error) {
         res = Response.fromError<CartRow>(error);
     }

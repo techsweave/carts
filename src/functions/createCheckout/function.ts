@@ -29,11 +29,6 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
         return { ...subject, ...otherSubject };
     });
 
-    //const mergedCartProducts = [];
-
-    // for await (const iterator of cart.items) {
-    //     mergedCartProducts.push(await productsService.getAsync(iterator.id));
-    // }
 
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
