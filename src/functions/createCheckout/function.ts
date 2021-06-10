@@ -2,6 +2,7 @@ import getCart from '@functions/getCart/function';
 import Stripe from 'stripe';
 import { Models, Services } from 'utilities-techsweave';
 import { ConditionExpression } from '@aws/dynamodb-expressions';
+import * as AWS from 'aws-sdk';
 
 const createCheckout = async (id: string, successUrl: string, cancelUrl: string, accessToken: string, idToken: string): Promise<Stripe.Response<Stripe.Checkout.Session>> => {
 
@@ -54,6 +55,28 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
         line_items: lineItems,
         mode: 'payment'
     });
+
+
+    const messageAttributes: AWS.SNS.MessageAttributeMap = mergedCartProducts.reduce(function (map, item) {
+
+        for (const [key, value] of Object.entries(item)) {
+            map[key] = {
+                DataType: 'String',
+                StringValue: JSON.stringify(value)
+            };
+        }
+
+        return map;
+    }, {});
+
+    const sns = new AWS.SNS();
+    const params: AWS.SNS.PublishInput = {
+        Message: 'createNewOrder',
+        TopicArn: 'arn:aws:sns:eu-central-1:780844780884:createOrder',
+        MessageAttributes: messageAttributes
+    };
+
+    await sns.publish(params).promise();
 
     return session;
 };

@@ -33,7 +33,8 @@ const serverlessConfiguration: AWS = {
             S3ARN: '${self:custom.s3arn}',
             CARTS_TABLE: '${self:custom.cartsTable}',
             USER_POOL_ID: '${self:custom.userPoolId}',
-            STRIPE_SECRET_KEY: '${self:custom.stripeSecretKey}'
+            STRIPE_SECRET_KEY: '${self:custom.stripeSecretKey}',
+            
         },
 
         iam: {
