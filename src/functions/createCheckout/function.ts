@@ -56,18 +56,24 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
         mode: 'payment'
     });
 
-
-    const messageAttributes: AWS.SNS.MessageAttributeMap = mergedCartProducts.reduce(function (map, item) {
-
-        for (const [key, value] of Object.entries(item)) {
-            map[key] = {
-                DataType: 'String',
-                StringValue: JSON.stringify(value)
-            };
+    const arr = [];
+    mergedCartProducts.forEach(item => {
+        arr.push({
+            productId: item.productId,
+            price: item.price,
+            quantity: item.quantity
+        });
+    });
+    const messageAttributes: AWS.SNS.MessageAttributeMap = {
+        products: {
+            DataType: 'String',
+            StringValue: JSON.stringify(arr)
+        },
+        accessToken: {
+            DataType: 'String',
+            StringValue: accessToken
         }
-
-        return map;
-    }, {});
+    };
 
     const sns = new AWS.SNS();
     const params: AWS.SNS.PublishInput = {
