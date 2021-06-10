@@ -5,7 +5,8 @@ import {
     editCart,
     getCart,
     removeProductFromCart,
-    createCheckout
+    createCheckout,
+    deleteCart
 } from '@functions/index';
 
 const serverlessConfiguration: AWS = {
@@ -100,7 +101,9 @@ const serverlessConfiguration: AWS = {
         editCart,
         getCart,
         removeProductFromCart,
-        createCheckout
+        createCheckout,
+        deleteCart
+
     },
 
 };
