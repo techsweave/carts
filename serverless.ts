@@ -9,7 +9,7 @@ import {
 } from '@functions/index';
 
 const serverlessConfiguration: AWS = {
-    service: 'products-service',
+    service: 'carts-service',
 
     frameworkVersion: '2',
 
@@ -34,7 +34,7 @@ const serverlessConfiguration: AWS = {
             CARTS_TABLE: '${self:custom.cartsTable}',
             USER_POOL_ID: '${self:custom.userPoolId}',
             STRIPE_SECRET_KEY: '${self:custom.stripeSecretKey}',
-            
+
         },
 
         iam: {
