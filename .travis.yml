@@ -9,9 +9,9 @@ install:
   - npx eslint src
 
 script:
-  - serverless deploy
+  - if [ $TRAVIS_PULL_REQUEST == "true" ]; then serverless; fi
+  - if [ $TRAVIS_BRANCH == "main" && $TRAVIS_PULL_REQUEST == "false" ]; then serverless deploy; fi
 
 branches:
   only:
-    - develop
     - main
