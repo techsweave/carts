@@ -1,7 +1,7 @@
 import dbContext from '@dbModel/dbContext';
 import CartRow from '@dbModel/tables/cart';
 
-const getCart = async (customerId: string): Promise<{
+const getCart = async (userId: string): Promise<{
     items: CartRow[],
     lastKey: Partial<CartRow>
 }> => {
@@ -11,8 +11,8 @@ const getCart = async (customerId: string): Promise<{
     const paginator = dbContext.scan(CartRow, {
         filter: {
             type: 'Equals',
-            subject: 'customerId',
-            object: customerId
+            subject: 'userId',
+            object: userId
         }
     }).pages();
 
