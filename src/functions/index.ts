@@ -5,3 +5,4 @@ export { default as removeProductFromCart } from '@functions/removeProductFromCa
 export { default as createCheckout } from '@functions/createCheckout';
 export { default as deleteCart } from '@functions/deleteCart';
 export { default as updateCartOnChangedProduct } from '@functions/updateCartOnChangedProduct';
+export { default as removeDeletedProductFromCart } from '@functions/removeDeletedProductFromCart';
