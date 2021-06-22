@@ -3,18 +3,23 @@ import CartRow from '@dbModel/tables/cart';
 import * as AWS from 'aws-sdk';
 
 const updateCartOnChangedProduct = async (productId: string): Promise<void> => {
-    const paginator = await dbContext.scan(CartRow, { filter: { type: 'Equals', subject: 'productId', object: productId } }).pages();
 
+    const paginator = dbContext.scan(CartRow, {
+        filter: {
+            type: 'Equals',
+            subject: 'productId',
+            object: productId
+        }
+    }).pages();
     const cognito = new AWS.CognitoIdentityServiceProvider();
-    let userAttributes: AWS.CognitoIdentityServiceProvider.AttributeListType;
-    let usersEmail: Array<string>;
+    const usersAttributes: Array<AWS.CognitoIdentityServiceProvider.AttributeListType> = [];
+    const usersEmail: Array<string> = [];
 
     for await (const page of paginator) {
-        for await (const item of page) {
+        for (const item of page) {
             item.isChanged = true;
             await dbContext.update(item, { onMissing: 'skip' });
-
-            userAttributes = await (await cognito.adminGetUser({ Username: item.userId, UserPoolId: process.env.USER_POOL_ID }).promise()).UserAttributes;
+            usersAttributes.push(await (await cognito.adminGetUser({ Username: item.userId, UserPoolId: process.env.USER_POOL_ID }).promise()).UserAttributes);
         }
     }
 
@@ -29,14 +34,13 @@ const updateCartOnChangedProduct = async (productId: string): Promise<void> => {
     ]
     */
 
-    userAttributes.forEach(item => {
-        if (item.Name == 'email')
-            usersEmail.push(item.Value);
+
+    usersAttributes.forEach(userAttributes => {
+        usersEmail.push(userAttributes.find(item => item.Name == 'email').Value);
     });
 
 
-
-    const ses = new AWS.SES();
+    const ses = new AWS.SES({ region: 'eu-west-1' });
     const params: AWS.SES.SendEmailRequest = {
         Destination: {
             BccAddresses: usersEmail
@@ -47,7 +51,7 @@ const updateCartOnChangedProduct = async (productId: string): Promise<void> => {
         },
         Source: 'no.reply.techsweave@gmail.com',
     };
-    ses.sendEmail(params);
+    await ses.sendEmail(params).promise();
 
 };
 export default updateCartOnChangedProduct;

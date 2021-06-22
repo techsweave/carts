@@ -18,7 +18,6 @@ const addProductToCartHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema>
             cartRow.userId = event.headers?.sessionId;
         }
 
-        cartRow.userId = event.body?.customerId;
         cartRow.productId = event.body?.productId;
         cartRow.quantity = event.body?.quantity;
         response = Response.fromData<CartRow>(await addProductToCart(cartRow), StatusCodes.OK);

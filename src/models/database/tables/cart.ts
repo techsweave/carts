@@ -16,7 +16,7 @@ class CartRow implements Models.Tables.ICart {
     //TODO
     @attribute()
     productId: string;
-
+    
     @attribute()
     userId: string;
 
