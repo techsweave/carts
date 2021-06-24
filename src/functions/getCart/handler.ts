@@ -22,9 +22,9 @@ const getCartHandler: ValidatedEventAPIGatewayProxyEvent<void> = async (event) =
         }
 
         const cart = await getCart(userId);
-        res = Response.fromMultipleData(cart.items, StatusCodes.OK, cart.lastKey);
+        res = await Response.fromMultipleData(cart.items, StatusCodes.OK, cart.lastKey);
     } catch (error) {
-        res = Response.fromError<CartRow>(error);
+        res = await Response.fromError<CartRow>(error);
     }
     return res.toAPIGatewayProxyResult();
 };

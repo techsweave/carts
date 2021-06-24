@@ -20,9 +20,9 @@ const addProductToCartHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema>
 
         cartRow.productId = event.body?.productId;
         cartRow.quantity = event.body?.quantity;
-        response = Response.fromData<CartRow>(await addProductToCart(cartRow), StatusCodes.OK);
+        response = await Response.fromData<CartRow>(await addProductToCart(cartRow), StatusCodes.OK);
     } catch (error) {
-        response = Response.fromError<CartRow>(error);
+        response = await Response.fromError<CartRow>(error);
     }
     return response.toAPIGatewayProxyResult();
 };
