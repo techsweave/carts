@@ -15,6 +15,10 @@ export default {
                         'application/json': schema
                     }
                 }
+            },
+            authorizer: {
+                name: 'ApiGatewayAuthorizer',
+                arn: '${self:custom.cognitoArn}'
             }
         }
     ]

@@ -9,6 +9,10 @@ export default {
                 method: 'delete',
                 path: 'cart/{id}',
                 cors: true
+            },
+            authorizer: {
+                name: 'ApiGatewayAuthorizer',
+                arn: '${self:custom.cognitoArn}'
             }
         }
     ]

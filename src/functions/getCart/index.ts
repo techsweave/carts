@@ -9,6 +9,10 @@ export default {
                 method: 'get',
                 path: 'cart',
                 cors: true
+            },
+            authorizer: {
+                name: 'ApiGatewayAuthorizer',
+                arn: '${self:custom.cognitoArn}'
             }
         }
     ]
