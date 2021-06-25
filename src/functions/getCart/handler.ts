@@ -14,8 +14,8 @@ const getCartHandler: ValidatedEventAPIGatewayProxyEvent<void> = async (event) =
     try {
 
         let userId: string;
-        if (event.headers?.AccessToken) {
-            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.AccessToken);
+        if (event.headers?.accesstoken) {
+            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.accesstoken);
             userId = await user.getUserId();
         } else {
             userId = event.headers?.sessionId;

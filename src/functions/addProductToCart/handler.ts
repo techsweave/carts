@@ -11,8 +11,8 @@ const addProductToCartHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema>
     try {
         const cartRow = new CartRow();
 
-        if (event.headers?.AccessToken) {
-            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.AccessToken);
+        if (event.headers?.accesstoken) {
+            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.accesstoken);
             cartRow.userId = await user.getUserId();
         } else {
             cartRow.userId = event.headers?.sessionId;

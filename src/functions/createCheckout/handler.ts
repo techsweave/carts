@@ -12,14 +12,14 @@ const createCheckoutHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> =
     try {
 
         let userId: string;
-        if (event.headers?.AccessToken) {
-            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.AccessToken);
+        if (event.headers?.accesstoken) {
+            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.accesstoken);
             userId = await user.getUserId();
         } else {
             userId = event.headers?.sessionId;
         }
 
-        const session = await createCheckout(userId, event.body?.successUrl, event.body?.cancelUrl, event.headers?.AccessToken, event.headers?.IdToken);
+        const session = await createCheckout(userId, event.body?.successUrl, event.body?.cancelUrl, event.headers?.accesstoken, event.headers?.IdToken);
         res = await Response.fromData<Stripe.Response<Stripe.Checkout.Session>>(session, StatusCodes.OK);
     }
     catch (error) {

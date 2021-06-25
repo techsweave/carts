@@ -10,11 +10,11 @@ import { ValidatedEventSQSEvent, middyfy, AuthenticatedUser } from 'utilities-te
 const deleteCartHandler: ValidatedEventSQSEvent<void> = async (event) => {
     try {
 
-        const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.Records[0]?.messageAttributes.AccessToken.stringValue);
+        const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.Records[0]?.messageAttributes.accesstoken.stringValue);
         const userId = await user.getUserId();
 
         await deleteCart(userId);
-        
+
     } catch (error) {
         console.log(error);
     }
