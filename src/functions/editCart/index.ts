@@ -9,7 +9,13 @@ export default {
             http: {
                 method: 'put',
                 path: 'cart/{id}',
-                cors: true,
+                cors: {
+                    origin: '*',
+                    allowCredentials: true,
+                    headers: [
+                        '*'
+                    ]
+                },
                 request: {
                     schema: {
                         'application/json': schema
