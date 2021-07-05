@@ -39,7 +39,7 @@
                     ],
                 },
                 "port": 5858,
-                "console": "internalConsole"
+                "console": "integratedTerminal"
             }
         ]
     }

@@ -11,9 +11,9 @@ const editCartHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async
         const cartRow = new CartRow();
         cartRow.id = event.pathParameters?.id;
         cartRow.quantity = event.body?.quantity;
-        response = Response.fromData<CartRow>(await editCart(cartRow), StatusCodes.OK);
+        response = await Response.fromData<CartRow>(await editCart(cartRow), StatusCodes.OK);
     } catch (error) {
-        response = Response.fromError<CartRow>(error);
+        response = await Response.fromError<CartRow>(error);
     }
     return response.toAPIGatewayProxyResult();
 };

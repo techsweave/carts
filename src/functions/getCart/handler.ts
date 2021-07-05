@@ -14,17 +14,17 @@ const getCartHandler: ValidatedEventAPIGatewayProxyEvent<void> = async (event) =
     try {
 
         let userId: string;
-        if (event.headers?.AccessToken) {
-            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.AccessToken);
+        if (event.headers?.accesstoken) {
+            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.accesstoken);
             userId = await user.getUserId();
         } else {
             userId = event.headers?.sessionId;
         }
 
         const cart = await getCart(userId);
-        res = Response.fromMultipleData(cart.items, StatusCodes.OK, cart.lastKey);
+        res = await Response.fromMultipleData(cart.items, StatusCodes.OK, cart.lastKey);
     } catch (error) {
-        res = Response.fromError<CartRow>(error);
+        res = await Response.fromError<CartRow>(error);
     }
     return res.toAPIGatewayProxyResult();
 };

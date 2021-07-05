@@ -8,7 +8,17 @@ export default {
             http: {
                 method: 'delete',
                 path: 'cart/{id}',
-                cors: true
+                cors: {
+                    origin: '*',
+                    allowCredentials: true,
+                    headers: [
+                        '*'
+                    ]
+                },
+            },
+            authorizer: {
+                name: 'ApiGatewayAuthorizer',
+                arn: '${self:custom.cognitoArn}'
             }
         }
     ]

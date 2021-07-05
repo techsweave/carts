@@ -16,6 +16,7 @@
         "@aws/dynamodb-data-mapper": "^0.7.3",
         "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
         "@middy/core": "^2.2.0",
+        "@middy/http-cors": "^2.4.1",
         "@middy/http-json-body-parser": "^2.2.0",
         "@serverless/components": "^3.9.2",
         "@types/uuid": "^8.3.0",
@@ -35,7 +36,7 @@
         "ts-loader": "^9.2.2",
         "ts-node": "^10.0.0",
         "tsconfig-paths-webpack-plugin": "^3.5.1",
-        "utilities-techsweave": "^1.1.14",
+        "utilities-techsweave": "^1.2.3",
         "uuid": "^3.3.2"
     },
     "devDependencies": {

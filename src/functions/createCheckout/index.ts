@@ -9,11 +9,21 @@ export default {
             http: {
                 method: 'post',
                 path: 'checkout',
-                cors: true,
+                cors: {
+                    origin: '*',
+                    allowCredentials: true,
+                    headers: [
+                        '*'
+                    ]
+                },
                 request: {
                     schema: {
                         'application/json': schema
                     }
+                },
+                authorizer: {
+                    name: 'ApiGatewayAuthorizer',
+                    arn: '${self:custom.cognitoArn}'
                 }
             }
         }

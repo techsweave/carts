@@ -9,9 +9,9 @@ import { StatusCodes } from 'http-status-codes';
 const removeProductFromCartHandler: ValidatedEventAPIGatewayProxyEvent<void> = async (event) => {
     let response: Response<CartRow>;
     try {
-        response = Response.fromData<CartRow>(await removeProductFromCart(event.pathParameters?.id), StatusCodes.OK);
+        response = await Response.fromData<CartRow>(await removeProductFromCart(event.pathParameters?.id), StatusCodes.OK);
     } catch (error) {
-        response = Response.fromError<CartRow>(error);
+        response = await Response.fromError<CartRow>(error);
     }
     return response.toAPIGatewayProxyResult();
 };

@@ -61,6 +61,7 @@ const serverlessConfiguration: AWS = {
         region: '${opt:region, self:provider.region}',
         stage: '${opt:stage, self:provider.stage}',
         queue: 'https://sqs.eu-central-1.amazonaws.com/780844780884/messagesQueue',
+        cognitoArn: 'arn:aws:cognito-idp:eu-central-1:780844780884:userpool/eu-central-1_eciEUvwzp',
         s3arn: 'arn:aws:sns:eu-central-1:780844780884:images',
         cartsTable: 'carts-table',
         userPoolId: 'eu-central-1_eciEUvwzp',
@@ -112,5 +113,3 @@ const serverlessConfiguration: AWS = {
 };
 
 module.exports = serverlessConfiguration;
-
-

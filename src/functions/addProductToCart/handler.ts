@@ -11,8 +11,8 @@ const addProductToCartHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema>
     try {
         const cartRow = new CartRow();
 
-        if (event.headers?.AccessToken) {
-            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.AccessToken);
+        if (event.headers?.accesstoken) {
+            const user: AuthenticatedUser = await AuthenticatedUser.fromToken(event.headers?.accesstoken);
             cartRow.userId = await user.getUserId();
         } else {
             cartRow.userId = event.headers?.sessionId;
@@ -20,9 +20,9 @@ const addProductToCartHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema>
 
         cartRow.productId = event.body?.productId;
         cartRow.quantity = event.body?.quantity;
-        response = Response.fromData<CartRow>(await addProductToCart(cartRow), StatusCodes.OK);
+        response = await Response.fromData<CartRow>(await addProductToCart(cartRow), StatusCodes.OK);
     } catch (error) {
-        response = Response.fromError<CartRow>(error);
+        response = await Response.fromError<CartRow>(error);
     }
     return response.toAPIGatewayProxyResult();
 };
