@@ -53,7 +53,11 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
         cancel_url: cancelUrl,
         payment_method_types: ['card'],
         line_items: lineItems,
-        mode: 'payment'
+        mode: 'payment',
+        metadata: {
+            accessToken: accessToken,
+            idToken: idToken,
+        }
     });
 
     const arr = [];
