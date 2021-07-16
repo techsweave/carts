@@ -47,7 +47,6 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
         });
     }
 
-
     const session = await stripe.checkout.sessions.create({
         success_url: successUrl,
         cancel_url: cancelUrl,
@@ -55,8 +54,13 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
         line_items: lineItems,
         mode: 'payment',
         metadata: {
-            accessToken: accessToken,
-            idToken: idToken,
+            accessToken_1: accessToken.substr(0, 400),
+            accessToken_2: accessToken.substr(400, 400),
+            accessToken_3: accessToken.substr(800, 400),
+            idToken_1: idToken.substr(0, 400),
+            idToken_2: idToken.substr(400, 400),
+            idToken_3: idToken.substr(800, 400),
+
         }
     });
 
