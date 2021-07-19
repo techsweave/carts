@@ -69,7 +69,7 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
             DataType: 'String',
             StringValue: JSON.stringify(arr)
         },
-        accessToken: {
+        accesstoken: {
             DataType: 'String',
             StringValue: accessToken
         }
