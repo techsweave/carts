@@ -47,13 +47,21 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
         });
     }
 
-
     const session = await stripe.checkout.sessions.create({
         success_url: successUrl,
         cancel_url: cancelUrl,
         payment_method_types: ['card'],
         line_items: lineItems,
-        mode: 'payment'
+        mode: 'payment',
+        metadata: {
+            accessToken_1: accessToken.substr(0, 400),
+            accessToken_2: accessToken.substr(400, 400),
+            accessToken_3: accessToken.substr(800, 400),
+            idToken_1: idToken.substr(0, 400),
+            idToken_2: idToken.substr(400, 400),
+            idToken_3: idToken.substr(800, 400),
+
+        }
     });
 
     const arr = [];
