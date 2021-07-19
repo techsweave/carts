@@ -19,7 +19,7 @@ const createCheckoutHandler: ValidatedEventAPIGatewayProxyEvent<typeof schema> =
             userId = event.headers?.sessionId;
         }
 
-        const session = await createCheckout(userId, event.body?.successUrl, event.body?.cancelUrl, event.headers?.accesstoken, event.headers?.idtoken);
+        const session = await createCheckout(userId, event.body?.successUrl, event.body?.cancelUrl, event.headers?.accesstoken, event.headers?.Authorization);
         res = await Response.fromData<Stripe.Response<Stripe.Checkout.Session>>(session, StatusCodes.OK);
     }
     catch (error) {
