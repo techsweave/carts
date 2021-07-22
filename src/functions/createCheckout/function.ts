@@ -21,8 +21,8 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
 
     const productsService = new Services.Products('vyx7o27url', process.env.REGION, process.env.STAGE, accessToken, idToken);
     let products: Models.Tables.IProduct[] = new Array<Models.Tables.IProduct>();
-    products = products.concat((await productsService.scanAsync(cart.items.length + 1, undefined, undefined, undefined, productFilter)).data);
-
+    const productsResult = await productsService.scanAsync(cart.items.length + 1, undefined, undefined, undefined, productFilter);
+    products = products.concat(productsResult.count ? productsResult.data : productsResult as any);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
 
     const mergedCartProducts = cart.items.map(subject => {
