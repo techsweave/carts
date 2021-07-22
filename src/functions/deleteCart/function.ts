@@ -8,7 +8,7 @@ const deleteCart = async (customerId: string): Promise<CartRow[]> => {
     const paginator = dbContext.scan(CartRow, {
         filter: {
             type: 'Equals',
-            subject: 'customerId',
+            subject: 'userId',
             object: customerId
         }
     }).pages();
