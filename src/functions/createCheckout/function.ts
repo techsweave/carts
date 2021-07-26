@@ -10,7 +10,8 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
     const productsId: Array<string> = [];
 
     cart.items.forEach(row => {
-        productsId.push(row.productId);
+        if (!row.isChanged)
+            productsId.push(row.productId);
     });
 
     const productFilter: ConditionExpression = {
@@ -25,11 +26,22 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
     products = products.concat(productsResult.count ? productsResult.data : productsResult as any);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
 
-    const mergedCartProducts = cart.items.map(subject => {
-        const otherSubject = products.find(element => element.id === subject.productId);
-        return { ...subject, ...otherSubject };
+    // const mergedCartProducts = cart.items.map(subject => {
+    //     const otherSubject = products.find(element => element.id === subject.productId);
+    //     if (otherSubject)
+    //         return { ...subject, ...otherSubject };
+    // });
+
+    const filteredCart = cart.items.filter(x => {
+        const prod = products.find(element => element.id === x.productId);
+        return prod;
     });
 
+    const mergedCartProducts = filteredCart.map(subject => {
+        const otherSubject = products.find(element => element.id === subject.productId);
+        // Can't do an if (otherSubject) { ... } here because map doesn't skip the element, but push an undefined object instead
+        return { ...subject, ...otherSubject };
+    });
 
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
@@ -41,7 +53,9 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
                     name: row.title,
                     description: row.description,
                 },
-                unit_amount: row.price * 100, // eur to cent conversion
+                unit_amount: row.discount ?
+                    (row.price - (row.price / 100 * row.discount)) * 100 :
+                    row.price * 100, // eur to cent conversion
             },
             quantity: row.quantity
         });
