@@ -53,9 +53,9 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
                     name: row.title,
                     description: row.description,
                 },
-                unit_amount_decimal: row.discount ?
-                    ((row.price - (row.price / 100 * row.discount)) * 100).toFixed(2):
-                    (row.price * 100).toFixed(2), // eur to cent conversion
+                unit_amount: row.discount ?
+                    (row.price - (row.price / 100 * row.discount)) * 100:
+                    row.price * 100, // eur to cent conversion
             },
             quantity: row.quantity
         });
