@@ -54,7 +54,7 @@ const createCheckout = async (id: string, successUrl: string, cancelUrl: string,
                     description: row.description,
                 },
                 unit_amount: row.discount ?
-                    (row.price - (row.price / 100 * row.discount)) * 100 :
+                    (+(row.price - (row.price / 100 * row.discount)).toFixed(2)) * 100:
                     row.price * 100, // eur to cent conversion
             },
             quantity: row.quantity
